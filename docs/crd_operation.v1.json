@@ -1,0 +1,301 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "CRD_OPERATIONS",
+    "version": "1.0",
+    "description": "Create, Read and Delete operations with json files"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Development"
+    }
+  ],
+  "paths": {
+    "/user/data": {
+      "parameters": [],
+      "get": {
+        "summary": "Get User Info by User ID",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseModel"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseModel"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-user-data",
+        "description": "Retrieve the information of the userusing  unique key.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "account_id",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 13
+            },
+            "in": "query",
+            "name": "id",
+            "required": true
+          }
+        ]
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-user-data",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseModel"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "406": {
+            "description": "ID Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseModel"
+                }
+              }
+            }
+          }
+        },
+        "description": "Add new user data",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "account_id",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 13
+            },
+            "in": "query",
+            "name": "id",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDataRequestModel"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Get User Info by User ID",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseModel"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "406": {
+            "description": "ID Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseModel"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "delete-user-data",
+        "description": "Delete user data using unique key",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "account_id",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 13
+            },
+            "in": "query",
+            "name": "id",
+            "required": true
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserDataRequestModel": {
+        "title": "UserDataRequestModel",
+        "type": "object",
+        "description": "",
+        "x-examples": {
+          "example-1": {
+            "product_name": "apple",
+            "quantity": 1,
+            "order_id": "2",
+            "price": 120000,
+            "status": "Ready To Ship"
+          }
+        },
+        "properties": {
+          "product_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "order_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "price": {
+            "type": "number",
+            "format": "float"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "Shipped",
+              "Delivered",
+              "Cancelled",
+              "Ready To Ship",
+              "Returned"
+            ]
+          }
+        },
+        "required": [
+          "product_name",
+          "quantity",
+          "order_id",
+          "price",
+          "status"
+        ]
+      },
+      "SuccessResponseModel": {
+        "title": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "example-1": {
+            "status": true,
+            "message": "Success"
+          }
+        },
+        "description": ""
+      },
+      "ErrorResponseModel": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "errors": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status_code": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "description",
+              "status_code"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "errors"
+        ],
+        "x-examples": {
+          "example-1": {
+            "status": true,
+            "message": "string",
+            "errors": {
+              "description": "string",
+              "status_code": 0
+            }
+          }
+        },
+        "title": ""
+      }
+    }
+  }
+}
