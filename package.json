@@ -1,0 +1,18 @@
+{
+  "name": "file-based-datastore",
+  "version": "1.0.0",
+  "description": "File based datastore",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "es6-error": "^4.1.1",
+    "express": "^4.17.1",
+    "express-json-validator-middleware": "^2.1.1",
+    "lodash": "^4.17.20"
+  }
+}

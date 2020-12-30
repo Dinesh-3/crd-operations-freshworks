@@ -1,0 +1,8 @@
+.idea
+node_modules/*
+.vscode
+.env
+env/
+package-lock.json
+.DS_Store
+temp/*
